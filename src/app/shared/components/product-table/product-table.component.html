@@ -1,0 +1,27 @@
+<nz-table
+[nzData]="products"
+[nzFrontPagination]="false"
+[nzLoading]="loading"
+(nzQueryParams)="onQueryParamsChange($event)"
+>
+<thead>
+  <tr>
+    <th nzColumnKey="name">Name</th>
+    <th nzColumnKey="originalPrice">Original Price</th>
+    <th nzColumnKey="retailPrice">Retail Price</th>
+    <th nzColumnKey="actions">Action</th>
+  </tr>
+</thead>
+<tbody>
+  <tr *ngFor="let item of products">
+    <td>
+      <span class="name" (click)="copy($event, item.name)">{{ item.name }}</span>
+      <span class="details" (click)="copy($event, item.source)">{{ item.source }}</span>
+      <span class="details" (click)="copy($event, item.externalId)">{{ item.externalId }}</span>
+    </td>
+    <td>{{ item.originalPrice }}</td>
+    <td>{{ item.retailPrice }}</td>
+    <td><app-product-table-action></app-product-table-action></td>
+  </tr>
+</tbody>
+</nz-table>

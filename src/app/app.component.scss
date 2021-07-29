@@ -1,0 +1,65 @@
+*,
+body,
+html {
+	padding: 0;
+	margin: 0;
+}
+
+.ant-layout-header {
+	line-height: 0 !important;
+}
+
+nz-header,
+app-navbar,
+nz-sider,
+nz-content,
+nz-footer {
+	display: block;
+}
+
+:host {
+	text-align: center;
+}
+
+nz-header {
+	clear: both;
+	height: 40px;
+}
+
+nz-footer {
+	line-height: 1.5;
+	clear: both;
+	height: 30px;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+
+nz-content {
+	position: absolute!important;
+	height: calc(100% - 70px) !important;
+	left: 200px!important;
+	top: 40px!important;
+	width: calc(100% - 200px) !important;
+	background: white!important;
+	display: inline-table;
+	padding-bottom: 20px;
+}
+
+nz-sider {
+	position: absolute;
+	height: calc(100% - 70px);
+	left: 0;
+	background: #f0f0f0;
+	width: 200px !important;
+	max-width: 200px !important;
+}
+
+nz-layout {
+	margin-bottom: 48px;
+	clear: both;
+}
+
+nz-layout:last-child {
+	margin: 0;
+}
