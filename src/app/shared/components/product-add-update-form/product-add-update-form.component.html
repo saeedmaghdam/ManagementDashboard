@@ -1,0 +1,23 @@
+<input #productNameElem nz-input placeholder="Product Name" (change)="emitEmitter()" [(ngModel)]="productName" nzSize="large" />
+<input #productExternalIdElem nz-input placeholder="Product External Id" (change)="emitEmitter()" [(ngModel)]="productExternalId"
+	nzSize="large" />
+<input #productUrlElem nz-input placeholder="Product Url" (change)="emitEmitter()" [(ngModel)]="productUrl" nzSize="large" />
+<nz-radio-group #sourceTypeElem [(ngModel)]="sourceType" nzButtonStyle="solid">
+	<label nz-radio-button nzValue="website">Website</label>
+	<label nz-radio-button nzValue="telegram">Telegram</label>
+</nz-radio-group>
+<input #sourceAddressElem nz-input (keyup.enter)="addSource()" placeholder="Source Address"
+	[(ngModel)]="sourceAddress" nzSize="large" />
+
+<ul #sourcesElem nz-list [nzDataSource]="sources" nzBordered nzSize="large">
+	<li nz-list-item *ngFor="let source of sources" nzNoFlex>
+		<ul nz-list-item-actions>
+			<nz-list-item-action>
+				<a (click)="deleteSourceAddress(source.id)">x</a>
+			</nz-list-item-action>
+		</ul>
+		{{ source.type }} - {{ source.address }}
+	</li>
+</ul>
+
+<button #saveAndCloseElem class="button-gray" disabled (click)="saveAndClose()">Save And Close</button>

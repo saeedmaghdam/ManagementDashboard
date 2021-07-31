@@ -1,6 +1,6 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
@@ -24,6 +24,8 @@ export class ProductTableComponent implements OnInit {
     { text: 'female', value: 'female' }
   ];
 
+  subscription: Subscription;
+
   loadDataFromServer(): void {
     this.loading = true;
     this.productService.get().subscribe(data => {
@@ -38,30 +40,36 @@ export class ProductTableComponent implements OnInit {
     this.loadDataFromServer();
   }
 
-  copy(event : Event, value: string) {
-      var element = event.target;
+  copy(event: Event, value: string) {
+    var element = event.target;
 
-      const el = document.createElement('textarea');
-      el.value = value;
-      el.setAttribute('readonly', '');
-      el.style.position = 'absolute';
-      el.style.left = '-9999px';
-      document.body.appendChild(el);
-      el.select();
-      document.execCommand('copy');
-      document.body.removeChild(el);
+    const el = document.createElement('textarea');
+    el.value = value;
+    el.setAttribute('readonly', '');
+    el.style.position = 'absolute';
+    el.style.left = '-9999px';
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
 
-      let originalColor = "#000";
+    let originalColor = "#000";
 
-      let className = (element as HTMLElement).className;
-      if (className.indexOf("details") != -1)
-        originalColor = "#949494";
-        
-      (element as HTMLElement).style.color = "#1ac537";
-      setTimeout(() => { (element as HTMLElement).style.color = originalColor; }, 1000);
+    let className = (element as HTMLElement).className;
+    if (className.indexOf("details") != -1)
+      originalColor = "#949494";
+
+    (element as HTMLElement).style.color = "#1ac537";
+    setTimeout(() => { (element as HTMLElement).style.color = originalColor; }, 1000);
   };
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService) {
+    this.subscription = this.productService.getNotification().subscribe(data => {
+      if (data) {
+        this.loadDataFromServer();
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.loadDataFromServer();

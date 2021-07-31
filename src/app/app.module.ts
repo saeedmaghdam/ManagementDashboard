@@ -25,6 +25,12 @@ import { ProductService } from './shared/services/product.service';
 import { ProductTableActionComponent } from './shared/components/product-table-action/product-table-action.component';
 import { ProductComponent } from './page/components/product/product.component';
 import { ServiceComponent } from './page/components/service/service.component';
+import { ProductAddUpdateFormComponent } from './shared/components/product-add-update-form/product-add-update-form.component';
+import { NzModalModule, NzModalRef } from 'ng-zorro-antd/modal';
+import { ModalService } from './shared/services/modal.service';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzListModule } from 'ng-zorro-antd/list';
 
 registerLocaleData(en);
 
@@ -39,7 +45,8 @@ registerLocaleData(en);
     ProductTableComponent,
     ProductTableActionComponent,
     ProductComponent,
-    ServiceComponent
+    ServiceComponent,
+    ProductAddUpdateFormComponent
   ],
   imports: [
     BrowserModule,
@@ -53,8 +60,21 @@ registerLocaleData(en);
     NzIconModule,
     NzDropDownModule,
     NzTableModule,
+    NzModalModule,
+    NzRadioModule,
+    NzInputModule,
+    NzListModule
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }, ProductService],
+  providers: [{ provide: NZ_I18N, useValue: en_US }, ProductService, ModalService, {
+    provide: NzModalRef,
+    useValue: {
+      getInstance: () => {
+        return {
+          setFooterWithTemplate: () => {}
+        };
+      }
+    }
+  } ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
